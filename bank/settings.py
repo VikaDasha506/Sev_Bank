@@ -31,6 +31,9 @@ DEBUG = True
 ALLOWED_HOSTS = [
     '*',
 ]
+CSRF_TRUSTED_ORIGINS = [
+    'https://vikadasha506-sev-bank-4adf.twc1.net',
+]
 
 INTERNAL_IPS = [
     '127.0.0.1',
