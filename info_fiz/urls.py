@@ -55,3 +55,4 @@ urlpatterns = [
 
 ]
 # python manage.py runserver
+# python3 manage.py migrate && echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('Manina_A', 'anka506@rambler.ru', 'Manynya506')" | python3 manage.py shell
