@@ -29,7 +29,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'vikadasha506-sevastopolbank-39c6.twc1.net',
+    'vikadasha506-sev-bank-4adf.twc1.net',
     '*',
 ]
 
