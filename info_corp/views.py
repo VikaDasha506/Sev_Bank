@@ -1,32 +1,48 @@
 from django.shortcuts import render
-
-# Create your views here.
-"""Вьюха для информационной панели"""
-
-from django.shortcuts import render
+from django.views.generic import TemplateView
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
-
-def get_salary_project(request):
-    """Представление рендерит шаблон base.html"""
-    return render(request, 'salary_project.html')
+from info_fiz.utils import get_exchange_rates_usd, get_exchange_rates_eur
+from datetime import datetime
 
 
-def get_acquiring(request):
-    """Представление рендерит шаблон base.html"""
-    return render(request, 'acquiring.html')
+class MenuMixin:
+    def get_context_data(self, **kwargs):
+        # Вызываем базовую реализацию для получения контекста
+        context = super().get_context_data(**kwargs)
+        # Получаем курсы валют и добавляем их в контекст
+        rates_usd = get_exchange_rates_usd()
+        rates_eur = get_exchange_rates_eur()
+        context['USD'] = rates_usd
+        context['EUR'] = rates_eur
+        context['current_date'] = datetime.now().strftime('%d.%m.%Y')
+        return context
 
 
-def get_cash_settlement_services(request):
-    """Представление рендерит шаблон base.html"""
-    return render(request, 'cash_settlement_services.html')
+class AboutSalaryProject(MenuMixin, TemplateView):
+    template_name = 'salary_project.html'
+
+    def get_context_data(self, **kwargs):
+        # Теперь мы явно вызываем get_context_data из MenuMixin
+        context = super().get_context_data(**kwargs)
+        # Дополнительная логика для контекста, если необходимо
+        return context
 
 
-def get_crediting(request):
-    """Представление рендерит шаблон base.html"""
-    return render(request, 'crediting.html')
+class AboutAcquiringProject(MenuMixin, TemplateView):
+    template_name = 'acquiring.html'
+
+    def get_context_data(self, **kwargs):
+        # Теперь мы явно вызываем get_context_data из MenuMixin
+        context = super().get_context_data(**kwargs)
+        # Дополнительная логика для контекста, если необходимо
+        return context
 
 
-def get_placement_funds(request):
-    """Представление рендерит шаблон base.html"""
-    return render(request, 'placement_funds.html')
+class AboutCashSettlementServices(MenuMixin, TemplateView):
+    template_name = 'cash_settlement_services.html'
+
+    def get_context_data(self, **kwargs):
+        # Теперь мы явно вызываем get_context_data из MenuMixin
+        context = super().get_context_data(**kwargs)
+        # Дополнительная логика для контекста, если необходимо
+        return context

@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
 </head>
 <body>
-    <p style="color:rgb(255, 255, 255); text-align: center;">Курс валюты:</p>
-    <div class="input-group" style="background-color:rgb(78, 117, 138); text-align: center;">
-        <span class="input-group-text">1 $:</span>
-        <span class="input-group-text">{{ USD.RUB|floatformat:2 }}</span>
-    </div>
-    <div class="input-group" style="background-color:rgb(78, 117, 138); text-align: center;">
+    <p style="color:rgb(255, 255, 255); text-align: center;">Курс валюты на:</p>
+    <p style="color:rgb(255, 255, 255); text-align: center;">{{ current_date }}</p>
+    <div class="input-group" style=" text-align: center;margin-left: 15px;margin-bottom: 15px;">
+        <span class="input-group-text" >1 $</span>
+        <span class="input-group-text" style="margin-right: 10px;">{{ USD.RUB|floatformat:2 }}</span>
+
         <span class="input-group-text">1 €:</span>
-        <span class="input-group-text">{{ EUR.RUB|floatformat:2 }}</span>
+        <span class="input-group-text" style="margin-right: 10px;">{{ EUR.RUB|floatformat:2 }}</span>
+
     </div>
 </body>
 </html>

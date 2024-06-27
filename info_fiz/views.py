@@ -3,90 +3,136 @@ from django.views.generic import TemplateView
 from info_fiz.utils import get_exchange_rates_usd, get_exchange_rates_eur
 import requests
 from django.core.exceptions import ImproperlyConfigured
+from datetime import datetime
+
+
+class MenuMixin:
+    def get_context_data(self, **kwargs):
+        # Вызываем базовую реализацию для получения контекста
+        context = super().get_context_data(**kwargs)
+        # Получаем курсы валют и добавляем их в контекст
+        rates_usd = get_exchange_rates_usd()
+        rates_eur = get_exchange_rates_eur()
+        context['USD'] = rates_usd
+        context['EUR'] = rates_eur
+        context['current_date'] = datetime.now().strftime('%d.%m.%Y')
+        return context
 
 
 def main(request):
     return render(request, 'base.html')
 
 
-class AboutFizView(TemplateView):
-    template_name = 'face_fiz.html'
-    extra_context = {'title': 'О кредитах'}
-
-
-class IndexView(TemplateView):
-    """наследует TemplateView.
-     Oсновная страница. Шаблон 'main.html'."""
+class IndexView(MenuMixin, TemplateView):
     template_name = 'main_content.html'
 
-
-def get_credit(request):
-    """Представление рендерит шаблон base.html"""
-    return render(request, 'credit.html')
-
-
-def get_deposits(request):
-    """Представление рендерит шаблон base.html"""
-    return render(request, 'deposits.html')
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
-def get_cards(request):
-    """Представление рендерит шаблон base.html"""
-    return render(request, 'cards.html')
+class AboutCreditView(MenuMixin, TemplateView):
+    template_name = 'credit.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
-def get_invoices_transfers(request):
-    return render(request, 'invoices_transfers.html')
+class AboutDepositView(MenuMixin, TemplateView):
+    template_name = 'deposits.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
-def get_securities(request):
-    """Представление рендерит шаблон base.html"""
-    return render(request, 'accounts_securities.html')
+class AboutCardsView(MenuMixin, TemplateView):
+    template_name = 'cards.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
-def get_additional_services(request):
-    """Представление рендерит шаблон base.html"""
-    return render(request, 'additional_services.html')
+class AboutInvoicesView(MenuMixin, TemplateView):
+    template_name = 'invoices_transfers.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
-def get_mortgage(request):
-    """Представление рендерит шаблон base.html"""
-    return render(request, 'mortgage.html')
+class AboutSecuritiesView(MenuMixin, TemplateView):
+    template_name = 'accounts_securities.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
-def get_consumer_credit(request):
-    """Представление рендерит шаблон base.html"""
-    return render(request, 'consumer_credit.html')
+class AboutMortgageView(MenuMixin, TemplateView):
+    template_name = 'mortgage.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
-def get_credit_card(request):
-    """Представление рендерит шаблон base.html"""
-    return render(request, 'credit_card.html')
+class AboutConsumerCreditView(MenuMixin, TemplateView):
+    template_name = 'consumer_credit.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
-def get_credit_holidays(request):
-    """Представление рендерит шаблон base.html"""
-    return render(request, 'credit_holidays.html')
+class AboutCreditCardView(MenuMixin, TemplateView):
+    template_name = 'credit_card.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
-def get_government_support(request):
-    """Представление рендерит шаблон base.html"""
-    return render(request, 'government_support.html')
+class AboutCreditHolidaysView(MenuMixin, TemplateView):
+    template_name = 'credit_holidays.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
-def get_military_mortgage(request):
-    """Представление рендерит шаблон base.html"""
-    return render(request, 'military_mortgage.html')
+class AboutGovernmentSupportView(MenuMixin, TemplateView):
+    template_name = 'government_support.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
-def get_it_mortgage(request):
-    """Представление рендерит шаблон base.html"""
-    return render(request, 'it_mortgage.html')
+class AboutMilitaryMortgageView(MenuMixin, TemplateView):
+    template_name = 'military_mortgage.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
-def get_family_mortgage(request):
-    """Представление рендерит шаблон base.html"""
-    return render(request, 'family_mortgage.html')
+class AboutItMortgageView(MenuMixin, TemplateView):
+    template_name = 'it_mortgage.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+
+class AboutFamilyMortgageView(MenuMixin, TemplateView):
+    template_name = 'family_mortgage.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
 def home_usd(request):
@@ -97,20 +143,3 @@ def home_usd(request):
 def home_eur(request):
     rates = get_exchange_rates_eur()
     return render(request, 'currency.html', {'rates': rates})
-
-
-class HomeView(IndexView):
-    """ Класс, который наследует от IndexView,
-        и переопределяет метод get_context_data(),
-        чтобы вернуть данные о курсах валют. """
-    template_name = 'main_content.html'
-
-    def get_context_data(self, **kwargs):
-        # Вызываем базовую реализацию для получения контекста
-        context = super().get_context_data(**kwargs)
-        # Получаем курсы валют и добавляем их в контекст
-        rates_usd = get_exchange_rates_usd()
-        rates_eur = get_exchange_rates_eur()
-        context['USD'] = rates_usd
-        context['EUR'] = rates_eur
-        return context

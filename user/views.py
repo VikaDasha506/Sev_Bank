@@ -3,21 +3,46 @@ from .models import Feedback, Calculator, LoanApplication, Loan
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView
 from django.views.decorators.csrf import csrf_protect
+from info_fiz.utils import get_exchange_rates_usd, get_exchange_rates_eur
+import requests
+from django.core.exceptions import ImproperlyConfigured
+from datetime import datetime
 
 
-class FeedBack(CreateView):
+class MenuMixin:
+    def get_context_data(self, **kwargs):
+        # Вызываем базовую реализацию для получения контекста
+        context = super().get_context_data(**kwargs)
+        # Получаем курсы валют и добавляем их в контекст
+        rates_usd = get_exchange_rates_usd()
+        rates_eur = get_exchange_rates_eur()
+        context['USD'] = rates_usd
+        context['EUR'] = rates_eur
+        context['current_date'] = datetime.now().strftime('%d.%m.%Y')
+        return context
+
+
+class FeedBack(MenuMixin, CreateView):
     model = Feedback
     template_name = 'feedback.html'
     redirect_field_name = 'next'
     success_url = reverse_lazy('user:thanks')
     fields = ['name', 'email', 'message']
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
     def form_valid(self, form):
         return super().form_valid(form)
 
 
-class ThanksForFeedback(TemplateView):
+class ThanksForFeedback(MenuMixin, TemplateView):
     template_name = 'feedback_thanks.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
 
 @csrf_protect
@@ -48,23 +73,35 @@ def save_loan_data(request):
         return render(request, 'error_page.html', {'message': 'Invalid request'})
 
 
-class CustomerCreate(CreateView):
+class CustomerCreate(MenuMixin, CreateView):
     model = Calculator
     template_name = 'calculator.html'
     fields = ['amount', 'term', 'interest_rate', 'monthly_payment', 'total_payment', 'total_interest']
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
-class CustomerResult(TemplateView):
+
+class CustomerResult(MenuMixin, TemplateView):
     template_name = 'result.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
-class CustomerLoanApplications(CreateView):
+
+class CustomerLoanApplications(MenuMixin, CreateView):
     model = LoanApplication
     template_name = 'loan_application.html'
     fields = ['name', 'last_name', 'patronymic', 'date_birth', 'passport_series', 'passport_number',
               'registration_address', 'email']
     redirect_field_name = 'next'
     success_url = reverse_lazy('user:loan_application_success')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
     def form_valid(self, form):
         # Получаем ID расчета кредита из сессии
@@ -78,5 +115,9 @@ class CustomerLoanApplications(CreateView):
             return self.form_invalid(form)
 
 
-class LoanApplicationSuccess(TemplateView):
+class LoanApplicationSuccess(MenuMixin, TemplateView):
     template_name = 'loan_application_success.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
