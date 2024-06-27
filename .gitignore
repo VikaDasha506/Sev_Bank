@@ -4,7 +4,6 @@
 .vscode/
 /clientele.db
 uploads/Модуль UML.pdf
-static/images/
 media/
 .env
 main.py/

@@ -125,3 +125,4 @@ STATICFILES_DIRS = [
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
+# python manage.py runserver

@@ -24,7 +24,7 @@ admin.site.index_title = 'Добро пожаловать в панель упр
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', (views.IndexView.as_view()), name='index'),
+    path('', (views.HomeView.as_view()), name='index'),
     path('fiz/', include('info_fiz.urls', namespace='fiz')),
     path('corp/', include('info_corp.urls', namespace='corp')),
     path('user/', include('user.urls', namespace='user')),

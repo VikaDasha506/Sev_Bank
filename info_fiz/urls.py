@@ -50,7 +50,6 @@ urlpatterns = [
     path('credit/mortgage/it_mortgage/', views.get_it_mortgage, name='it_mortgage'),  # Информация по it-ипотеке
     path('credit/mortgage/family_mortgage/', views.get_family_mortgage, name='family_mortgage'),
     # Информация по семейной ипотеке
-    #path('exchange-rates/', (views.ExchangeRateView.as_view()), name='exchange_rates'),
 
 
 ]
