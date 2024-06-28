@@ -20,15 +20,15 @@ async def send_telegram_message(token, chat_id, message, parse_mode="Markdown"):
     except Exception as e:
         logging.error(f'Ошибка отправки сообщения в чат {chat_id}: {e}')
 
-
-message = """
-*Банк Первый Севастопольский!*
-Это сообщение отправлено из Python-скрипта с использованием библиотеки python-telegram-bot.
-
-```python
-print("Банк Первый Севастопольский")
-```
-"""
-
-asyncio.run(send_telegram_message(TELEGRAM_BOT_TOKEN, YOUR_PERSONAL_CHAT_ID, message))
-
+#
+# message = """
+# *Банк Первый Севастопольский!*
+# Это сообщение отправлено из Python-скрипта с использованием библиотеки python-telegram-bot.
+#
+# ```python
+# print("Банк Первый Севастопольский")
+# ```
+# """
+#
+# asyncio.run(send_telegram_message(TELEGRAM_BOT_TOKEN, YOUR_PERSONAL_CHAT_ID, message))
+#
