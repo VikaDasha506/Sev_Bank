@@ -4,7 +4,7 @@ from django.core.exceptions import ImproperlyConfigured
 
 
 def get_exchange_rates_usd():
-    url = 'https://v6.exchangerate-api.com/v6/c39ba5fc361ff2f7cda3b7b9/latest/USD'
+    url = 'https://v6.exchangerate-api.com/v6/f4361dc2a5328f2fa95e64fa/latest/USD'
     params = {
         'base': 'USD',
         'symbols': 'RUB'
@@ -15,7 +15,7 @@ def get_exchange_rates_usd():
 
 
 def get_exchange_rates_eur():
-    url = 'https://v6.exchangerate-api.com/v6/c39ba5fc361ff2f7cda3b7b9/latest/EUR'
+    url = 'https://v6.exchangerate-api.com/v6/f4361dc2a5328f2fa95e64fa/latest/EUR'
     params = {
         'base': 'EUR',
         'symbols': 'RUB'
