@@ -90,5 +90,5 @@ class LoanApplication(models.Model):  # Модель кредитной заяв
         return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
 
     def __str__(self):
-        return (f'{self.name} - {self.last_name}-{self.patronymic}- {self.date_birth}- {self.passport_series}-'
+        return (f'{self.patronymic}-{self.name} - {self.last_name}- {self.date_birth}- {self.passport_series}-'
                 f' {self.passport_number}- {self.registration_address}- {self.email}')
