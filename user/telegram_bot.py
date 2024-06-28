@@ -22,11 +22,11 @@ async def send_telegram_message(token, chat_id, message, parse_mode="Markdown"):
 
 
 message = """
-*Привет, группа Python331!*
+*Банк Первый Севастопольский!*
 Это сообщение отправлено из Python-скрипта с использованием библиотеки python-telegram-bot.
 
 ```python
-print("Hello, Python331!")
+print("Банк Первый Севастопольский")
 ```
 """
 
