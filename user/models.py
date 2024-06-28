@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator, EmailValidator
+from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 from datetime import date
 
@@ -49,17 +50,45 @@ class LoanApplication(models.Model):  # Модель кредитной заяв
     name = models.CharField(max_length=255, verbose_name='Имя')
     patronymic = models.CharField(max_length=255, verbose_name='Отчество')
     date_birth = models.DateField(verbose_name='Дата рождения')
-    passport_series = models.CharField(max_length=4, validators=[RegexValidator(r'^\d{4}$')],
-                                       verbose_name='Серия паспорта')
-    passport_number = models.CharField(max_length=6,
-                                       validators=[RegexValidator(r'^\d{6}$')],
-                                       verbose_name='Номер паспорта')
+    passport_series = models.CharField(
+        max_length=4,
+        validators=[RegexValidator(
+            r'^\d{4}$', message=_('Введите корректную серию паспорта.'))
+        ],
+        verbose_name='Серия паспорта'
+    )
+    passport_number = models.CharField(
+        max_length=6,
+        validators=[RegexValidator(
+            r'^\d{6}$', message=_('Введите корректный номер паспорта.'))
+        ],
+        verbose_name='Номер паспорта'
+    )
     registration_address = models.CharField(max_length=255,
                                             validators=[RegexValidator(
-                                                r'^г\.?\s*[А-ЯЁ][а-яё]+\s*,?\s*ул\.?\s*[А-ЯЁа-яё0-9]+\s*,?\s*д\.?\s*\d+')],
+                                                r'^г\.?\s*[А-ЯЁ][а-яё]+\s*,?\s*ул\.?\s*[А-ЯЁа-яё0-9]+\s*,?\
+                                                s*д\.?\s*\d+',
+                                                message=_('формат ввода: г. ул. д.'))],
                                             verbose_name='Адрес регистрации')
     email = models.EmailField(validators=[EmailValidator()],
                               verbose_name='Адрес электронной почты')
+
+    def clean(self):
+        super().clean()  # Вызов метода базового класса
+        age = self.calculate_age(self.date_birth)
+        if age < 21:
+            raise ValidationError({
+                'date_birth': _('Возраст должен быть не меньше 21 года.')
+            })
+        elif age > 65:
+            raise ValidationError({
+                'date_birth': _('Возраст не может превышать 65 лет.')
+            })
+
+    @staticmethod
+    def calculate_age(born):
+        today = date.today()
+        return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
 
     def __str__(self):
         return (f'{self.name} - {self.last_name}-{self.patronymic}- {self.date_birth}- {self.passport_series}-'
