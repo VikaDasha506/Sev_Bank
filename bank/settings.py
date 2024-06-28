@@ -33,6 +33,7 @@ ALLOWED_HOSTS = [
 ]
 CSRF_TRUSTED_ORIGINS = [
     'https://vikadasha506-sev-bank-4adf.twc1.net',
+    'https://*.sev-bank.ru',
 ]
 
 INTERNAL_IPS = [
