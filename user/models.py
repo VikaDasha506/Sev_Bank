@@ -1,5 +1,7 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator, RegexValidator, EmailValidator
+from django.core.exceptions import ValidationError
+from datetime import date
 
 
 class Feedback(models.Model):  # Модель обратной связи
@@ -30,7 +32,7 @@ class Calculator(models.Model):  # Модель кредитного кальк�
 
 
 class Loan(models.Model):  # Модель результата расчета
-    amount = models.CharField(max_length=255) # сумма
+    amount = models.CharField(max_length=255)  # сумма
     term = models.CharField(max_length=255)  # срок
     interest_rate = models.CharField(max_length=255)  # процентная ставка
     monthly_payment = models.CharField(max_length=255)
@@ -43,23 +45,23 @@ class Loan(models.Model):  # Модель результата расчета
 
 class LoanApplication(models.Model):  # Модель кредитной заявки
     customer = models.ForeignKey(Loan, on_delete=models.CASCADE, verbose_name='Расчеты калькулятора')
-    name = models.CharField(max_length=255, verbose_name='Имя')
     last_name = models.CharField(max_length=255, verbose_name='Фамилия')
+    name = models.CharField(max_length=255, verbose_name='Имя')
     patronymic = models.CharField(max_length=255, verbose_name='Отчество')
     date_birth = models.DateField(verbose_name='Дата рождения')
-    passport_series = models.IntegerField(
-        validators=[MinValueValidator(1000), MaxValueValidator(9999)],
-        verbose_name='Серия паспорта')
-    passport_number = models.IntegerField(
-        validators=[MinValueValidator(100000), MaxValueValidator(999999)],
-        verbose_name='Номер паспорта')
-    registration_address = models.CharField(max_length=255, validators=[
-        RegexValidator(r'^[А-ЯЁа-яё\s,.-]+$')], verbose_name='Адрес регистрации')
+    passport_series = models.CharField(max_length=4, validators=[RegexValidator(r'^\d{4}$')],
+                                       verbose_name='Серия паспорта')
+    passport_number = models.CharField(max_length=6,
+                                       validators=[RegexValidator(r'^\d{6}$')],
+                                       verbose_name='Номер паспорта')
+    registration_address = models.CharField(max_length=255,
+                                            validators=[RegexValidator(
+                                                r'^г\.?\s*[А-ЯЁ][а-яё]+\s*,?\s*ул\.?\s*[А-ЯЁа-яё0-9]+\s*,?\s*д\.?\s*\d+')],
+                                            verbose_name='Адрес регистрации')
     email = models.EmailField(validators=[EmailValidator()],
                               verbose_name='Адрес электронной почты')
 
     def __str__(self):
         return (f'{self.name} - {self.last_name}-{self.patronymic}- {self.date_birth}- {self.passport_series}-'
                 f' {self.passport_number}- {self.registration_address}- {self.email}')
-
 
