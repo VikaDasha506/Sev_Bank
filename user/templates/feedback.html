@@ -5,28 +5,31 @@
 {% block head %}{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1 style="color:rgb(0, 66, 128);">У Вас вопрос?</h1>
-    <p class="heading">На указанную Вами электронную почту будет отправлен ответ на Ваш вопрос.</p>
-    <form action="{% url 'user:feedback' %}" method="post" >
-        {% csrf_token %}
-        {% for field in form %}
-        <div class="form-group{% if field.errors %} has-error{% endif %}">
-            {{ field.label_tag }}
-            {{ field }}
-            {% if field.help_text %}
-            <small class="form-text text-muted">{{ field.help_text }}</small>
-            {% endif %}
+<div class="container" style="display: flex; justify-content: center; align-items: center; height: 70vh;">
+    <div style="width: 100%; max-width: 600px;"> <!-- Этот div будет центрировать содержимое по горизонтали и вертикали -->
+        <h1 style="color:rgb(0, 66, 128); text-align: center; margin-bottom:10px;">У Вас вопрос?</h1>
+        <p class="heading" style="text-align: center;">На указанную Вами электронную почту будет отправлен ответ на Ваш вопрос.</p>
+        <form action="{% url 'user:feedback' %}" method="post" >
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group{% if field.errors %} has-error{% endif %}" style="margin-bottom: 20px;">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+                {% endif %}
 
-            {% for error in field.errors %}
-            <div class="alert alert-danger" role="alert">{{ error }}</div>
+                {% for error in field.errors %}
+                <div class="alert alert-danger" role="alert">{{ error }}</div>
+                {% endfor %}
+            </div>
             {% endfor %}
-        </div>
-        {% endfor %}
 
-        <input type="hidden" name="next" value="{{ request.GET.next }}">
-        <button class="send" type="submit">Отправить</button>
-    </form>
-    <br>
+            <input type="hidden" name="next" value="{{ request.GET.next }}">
+            <div style="text-align: center;">
+                <button class="send" type="submit">Отправить</button>
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock %}

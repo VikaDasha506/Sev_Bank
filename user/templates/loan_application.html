@@ -1,34 +1,54 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}Информация о сайте{% endblock %}
+{% block title %}Заявка на кредит{% endblock %}
 
 {% block head %}
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 <style>
-.form-group{
-width: 500px !important;
-margin-left: 400px !important;
+#loan {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px auto;
 }
-input {
-   width: 650px;
-   height: 40px;
-   margin-left: 300px;
+form {
+  width: 100%; /* Установите максимальную ширину формы */
+  max-width: 500px; /* Максимальная ширина формы для больших экранов */
 }
-label {
-    text-align: center;
-    margin-left: 310px;
+h1{
+margin: 10px auto;
 }
-h1 {
-    margin-left: 450px;
+#id_name {
+width: 400px !important;
 }
-
+#id_last_name {
+width: 365px !important;
+}
+#id_patronymic {
+width: 365px !important;
+}
+#id_date_birth  {
+width: 320px !important;
+}
+#id_passport_series  {
+width: 315px !important;
+}
+#id_passport_number  {
+width: 310px !important;
+}
+#id_registration_address  {
+width: 290px !important;
+}
+#id_email  {
+width: 240px !important;
+}
 </style>
 {% endblock %}
 
-
 {% block content %}
-<div class="container">
+<div class="container" id="loan">
   <h1 style="color:rgb(0, 66, 128);">Кредитная заявка</h1>
   <form action="{% url 'user:customer_loan_application' %}" method="post">
     {% csrf_token %}
@@ -47,7 +67,7 @@ h1 {
     {% endfor %}
 
     <input type="hidden" name="next" value="{{ request.GET.next }}">
-    <button style="margin-left: 500px;width: 200px; height: 30px;" type="submit">Отправить</button>
+    <button type="submit">Отправить</button>
   </form>
     <br>
 </div>
