@@ -8,8 +8,8 @@
 <style>
 h2 {
     color:rgb(0, 66, 128);
-    text-align: center;
     margin-bottom: 40px;
+    margin-left: 20px;
 }
 h6 {
     margin-bottom: 20px;
@@ -18,12 +18,8 @@ h6 {
 }
 #results {
 margin: 0 auto;
-text-align: center;
 }
-.badge rounded-pill bg-danger{
-text-align: center;
-margin-left: 100px;
-}
+
 </style>
 {% endblock %}
 
@@ -34,7 +30,7 @@ margin-left: 100px;
     <form action="{% url 'user:result' %}" method="post">
         {% csrf_token %}
         <div id="results"></div>
-        <span class="badge rounded-pill bg-danger" style="width: 220px;height: 30px; text-decoration: none;margin-left: 420px;">
+        <span class="badge rounded-pill bg-danger" style="width: 220px;height: 30px; text-decoration: none;">
             <a class="text-white fs-6" style="text-decoration: none" href="{% url 'user:calculator' %}">Расчитать заново</a>
         </span>
         <span class="badge rounded-pill bg-danger" style="width: 220px;height: 30px; text-decoration: none;">

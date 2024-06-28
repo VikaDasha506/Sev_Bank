@@ -30,7 +30,7 @@ class Calculator(models.Model):  # Модель кредитного кальк�
 
 
 class Loan(models.Model):  # Модель результата расчета
-    amount = models.CharField(max_length=255)
+    amount = models.CharField(max_length=255) # сумма
     term = models.CharField(max_length=255)  # срок
     interest_rate = models.CharField(max_length=255)  # процентная ставка
     monthly_payment = models.CharField(max_length=255)
@@ -46,17 +46,17 @@ class LoanApplication(models.Model):  # Модель кредитной заяв
     name = models.CharField(max_length=255, verbose_name='Имя')
     last_name = models.CharField(max_length=255, verbose_name='Фамилия')
     patronymic = models.CharField(max_length=255, verbose_name='Отчество')
-    date_birth = models.DateField(verbose_name='Дата рождения')  # прописать валидацию даты рождения
+    date_birth = models.DateField(verbose_name='Дата рождения')
     passport_series = models.IntegerField(
         validators=[MinValueValidator(1000), MaxValueValidator(9999)],
-        verbose_name='Серия паспорта')  # прописать валидацию серии паспорта
+        verbose_name='Серия паспорта')
     passport_number = models.IntegerField(
         validators=[MinValueValidator(100000), MaxValueValidator(999999)],
-        verbose_name='Номер паспорта')  # прописать валидацию номера паспорта
+        verbose_name='Номер паспорта')
     registration_address = models.CharField(max_length=255, validators=[
-        RegexValidator(r'^[А-ЯЁа-яё\s,.-]+$')], verbose_name='Адрес регистрации')  # прописать логику адреса регистрации
+        RegexValidator(r'^[А-ЯЁа-яё\s,.-]+$')], verbose_name='Адрес регистрации')
     email = models.EmailField(validators=[EmailValidator()],
-                              verbose_name='Адрес электронной почты')  # прописать валидацию эл.почты
+                              verbose_name='Адрес электронной почты')
 
     def __str__(self):
         return (f'{self.name} - {self.last_name}-{self.patronymic}- {self.date_birth}- {self.passport_series}-'

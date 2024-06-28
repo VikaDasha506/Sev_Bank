@@ -22,9 +22,7 @@ class AboutSalaryProject(MenuMixin, TemplateView):
     template_name = 'salary_project.html'
 
     def get_context_data(self, **kwargs):
-        # Теперь мы явно вызываем get_context_data из MenuMixin
         context = super().get_context_data(**kwargs)
-        # Дополнительная логика для контекста, если необходимо
         return context
 
 
@@ -32,9 +30,7 @@ class AboutAcquiringProject(MenuMixin, TemplateView):
     template_name = 'acquiring.html'
 
     def get_context_data(self, **kwargs):
-        # Теперь мы явно вызываем get_context_data из MenuMixin
         context = super().get_context_data(**kwargs)
-        # Дополнительная логика для контекста, если необходимо
         return context
 
 
@@ -42,7 +38,5 @@ class AboutCashSettlementServices(MenuMixin, TemplateView):
     template_name = 'cash_settlement_services.html'
 
     def get_context_data(self, **kwargs):
-        # Теперь мы явно вызываем get_context_data из MenuMixin
         context = super().get_context_data(**kwargs)
-        # Дополнительная логика для контекста, если необходимо
         return context

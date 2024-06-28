@@ -10,8 +10,9 @@ from datetime import datetime
 
 
 class MenuMixin:
+    # Миксин для добавления курса валют
     def get_context_data(self, **kwargs):
-        # Вызываем базовую реализацию для получения контекста
+        # Получаем контекст
         context = super().get_context_data(**kwargs)
         # Получаем курсы валют и добавляем их в контекст
         rates_usd = get_exchange_rates_usd()
