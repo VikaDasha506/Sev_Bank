@@ -66,8 +66,7 @@ class LoanApplication(models.Model):  # Модель кредитной заяв
     )
     registration_address = models.CharField(max_length=255,
                                             validators=[RegexValidator(
-                                                r'^г\.?\s*[А-ЯЁ][а-яё]+\s*,?\s*ул\.?\s*[А-ЯЁа-яё0-9]+\s*,?\
-                                                s*д\.?\s*\d+',
+                                                r'^г\.?\s*[А-ЯЁ][а-яё]+\s*,?\s*ул\.?\s*[А-ЯЁа-яё0-9]+\s*,?\s*д\.?\s*\d+',
                                                 message=_('формат ввода: г. ул. д.'))],
                                             verbose_name='Адрес регистрации')
     email = models.EmailField(validators=[EmailValidator()],
@@ -93,4 +92,3 @@ class LoanApplication(models.Model):  # Модель кредитной заяв
     def __str__(self):
         return (f'{self.name} - {self.last_name}-{self.patronymic}- {self.date_birth}- {self.passport_series}-'
                 f' {self.passport_number}- {self.registration_address}- {self.email}')
-
