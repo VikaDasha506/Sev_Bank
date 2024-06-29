@@ -73,7 +73,7 @@ class LoanApplication(models.Model):  # Модель кредитной заяв
                               verbose_name='Адрес электронной почты')
 
     def clean(self):
-        super().clean()  # Вызов метода базового класса
+        super().clean()
         age = self.calculate_age(self.date_birth)
         if age < 21:
             raise ValidationError({
