@@ -112,7 +112,7 @@ function Selected(a) {
       alert("Сумма кредита должна быть от 100 000 - 10 000 000.");
       return;
       }
-      if (isNaN(term) || term < 18 || term > 301) {
+      if (isNaN(term) || term < 18 || term > 300 || term % 6 !== 0) {
       alert("Срок кредита должен быть от 18 месяцев - 300 месяцев (с шагом 6 месяцев)");
       return;
       }
